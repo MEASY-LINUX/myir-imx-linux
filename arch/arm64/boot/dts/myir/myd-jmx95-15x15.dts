@@ -548,6 +548,10 @@
 	status = "okay";
 };
 
+&netc_blk_ctrl {
+	status = "okay";
+};
+
 &netc_bus0 {
 	msi-map = <0x0 &its 0x60 0x1>,	//ENETC0 PF
 		  <0x10 &its 0x61 0x1>, //ENETC0 VF0
@@ -584,6 +588,10 @@
 };
 
 &netc_timer {
+	status = "okay";
+};
+
+&netcmix_blk_ctrl {
 	status = "okay";
 };
 
