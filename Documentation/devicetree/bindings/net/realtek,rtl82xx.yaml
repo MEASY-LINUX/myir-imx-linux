@@ -50,6 +50,13 @@ properties:
     description:
       Enable ALDPS mode, ALDPS mode default is disabled after hardware reset.
 
+  realtek,led-config:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    maximum: 65535
+    description:
+      Initial value of the RTL8211F LED control register. The PHY LED class
+      devices may change this configuration after probe.
+
   wakeup-source:
     type: boolean
     description:
@@ -68,6 +75,7 @@ allOf:
     then:
       properties:
         leds: false
+        realtek,led-config: false
 
 examples:
   - |

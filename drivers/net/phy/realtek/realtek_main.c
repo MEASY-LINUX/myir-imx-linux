@@ -669,6 +669,24 @@ static int rtl8211f_config_phy_eee(struct phy_device *phydev)
 				RTL8211F_PHYCR2_PHY_EEE_ENABLE, 0);
 }
 
+static int rtl8211f_config_leds(struct phy_device *phydev)
+{
+	struct device *dev = &phydev->mdio.dev;
+	u32 config;
+	int ret;
+
+	ret = device_property_read_u32(dev, "realtek,led-config", &config);
+	if (ret == -EINVAL || ret == -ENODATA)
+		return 0;
+	if (ret)
+		return ret;
+	if (config > 0xffff)
+		return -ERANGE;
+
+	return phy_write_paged(phydev, RTL8211F_LEDCR_PAGE, RTL8211F_LEDCR,
+			       config);
+}
+
 static int rtl8211f_config_init(struct phy_device *phydev)
 {
 	struct device *dev = &phydev->mdio.dev;
@@ -689,6 +707,12 @@ static int rtl8211f_config_init(struct phy_device *phydev)
 	if (ret) {
 		dev_err(dev, "clkout configuration failed: %pe\n",
 			ERR_PTR(ret));
+		return ret;
+	}
+
+	ret = rtl8211f_config_leds(phydev);
+	if (ret) {
+		dev_err(dev, "LED configuration failed: %pe\n", ERR_PTR(ret));
 		return ret;
 	}
 

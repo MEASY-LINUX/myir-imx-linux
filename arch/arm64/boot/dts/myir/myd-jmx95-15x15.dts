@@ -593,13 +593,75 @@
 	status = "okay";
 
 	ethphy0: ethernet-phy@5 {
+		compatible = "ethernet-phy-id001c.c916";
 		reg = <5>;
 		realtek,clkout-disable;
+		realtek,led-config = <0xad70>;
+
+		leds {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <0>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <0>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+
+			led@1 {
+				reg = <1>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <1>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+
+			led@2 {
+				reg = <2>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <2>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+		};
 	};
 
 	ethphy1: ethernet-phy@7 {
+		compatible = "ethernet-phy-id001c.c916";
 		reg = <7>;
 		realtek,clkout-disable;
+		realtek,led-config = <0xad70>;
+
+		leds {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			led@0 {
+				reg = <0>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <0>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+
+			led@1 {
+				reg = <1>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <1>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+
+			led@2 {
+				reg = <2>;
+				function = LED_FUNCTION_LAN;
+				function-enumerator = <2>;
+				linux,default-trigger = "netdev";
+				default-state = "keep";
+			};
+		};
 	};
 };
 
