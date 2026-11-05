@@ -25,6 +25,7 @@ properties:
     enum:
       - nxp,88w8987-bt
       - nxp,88w8997-bt
+      - nxp,aw-xm729-bt
 
   fw-init-baudrate:
     $ref: /schemas/types.yaml#/definitions/uint32
