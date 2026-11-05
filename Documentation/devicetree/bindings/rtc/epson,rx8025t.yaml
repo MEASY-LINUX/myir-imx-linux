@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/rtc/epson,rx8025t.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Epson RX-8025T Real-Time Clock
+
+maintainers:
+  - MYIR Electronics <support@myirtech.com>
+
+allOf:
+  - $ref: rtc.yaml#
+
+properties:
+  compatible:
+    const: epson,rx8025t
+
+  reg:
+    maxItems: 1
+
+required:
+  - compatible
+  - reg
+
+unevaluatedProperties: false
+
+examples:
+  - |
+    i2c {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        rtc@32 {
+            compatible = "epson,rx8025t";
+            reg = <0x32>;
+        };
+    };
