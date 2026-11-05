@@ -603,6 +603,9 @@
 	ethphy0: ethernet-phy@5 {
 		compatible = "ethernet-phy-id001c.c916";
 		reg = <5>;
+		reset-gpios = <&exp_gpio 6 GPIO_ACTIVE_LOW>;
+		reset-assert-us = <10000>;
+		reset-deassert-us = <80000>;
 		realtek,clkout-disable;
 		realtek,led-config = <0xad70>;
 
@@ -639,6 +642,9 @@
 	ethphy1: ethernet-phy@7 {
 		compatible = "ethernet-phy-id001c.c916";
 		reg = <7>;
+		reset-gpios = <&gpio2 30 GPIO_ACTIVE_LOW>;
+		reset-assert-us = <10000>;
+		reset-deassert-us = <80000>;
 		realtek,clkout-disable;
 		realtek,led-config = <0xad70>;
 
@@ -1028,6 +1034,7 @@
 		fsl,pins = <
 			IMX95_PAD_ENET1_MDC__NETCMIX_TOP_NETC_MDC		0x50e
 			IMX95_PAD_ENET1_MDIO__NETCMIX_TOP_NETC_MDIO		0x90e
+			IMX95_PAD_GPIO_IO30__GPIO2_IO_BIT30			0x31e
 		>;
 	};
 
