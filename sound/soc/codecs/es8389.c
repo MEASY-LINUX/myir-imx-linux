@@ -31,6 +31,7 @@
 struct	es8389_private {
 	struct regmap *regmap;
 	struct clk *mclk;
+	bool mclk_enabled;
 	unsigned int sysclk;
 	int mastermode;
 
@@ -611,9 +612,12 @@ static int es8389_set_bias_level(struct snd_soc_component *component,
 
 	switch (level) {
 	case SND_SOC_BIAS_ON:
-		ret = clk_prepare_enable(es8389->mclk);
-		if (ret)
-			return ret;
+		if (!es8389->mclk_enabled) {
+			ret = clk_prepare_enable(es8389->mclk);
+			if (ret)
+				return ret;
+			es8389->mclk_enabled = true;
+		}
 
 		regmap_update_bits(es8389->regmap, ES8389_HPSW, 0x20, 0x20);
 		regmap_write(es8389->regmap, ES8389_ANA_CTL1, 0xD9);
@@ -641,7 +645,10 @@ static int es8389_set_bias_level(struct snd_soc_component *component,
 		usleep_range(8000, 8500);
 		regmap_update_bits(es8389->regmap, ES8389_DAC_INV, 0x80, 0x00);
 
-		clk_disable_unprepare(es8389->mclk);
+		if (es8389->mclk_enabled) {
+			clk_disable_unprepare(es8389->mclk);
+			es8389->mclk_enabled = false;
+		}
 		break;
 	case SND_SOC_BIAS_OFF:
 		break;
@@ -840,6 +847,7 @@ static int es8389_probe(struct snd_soc_component *component)
 		dev_err(component->dev, "%s, unable to enable mclk\n", __func__);
 		return ret;
 	}
+	es8389->mclk_enabled = true;
 
 	es8389_init(component);
 	es8389_set_bias_level(component, SND_SOC_BIAS_STANDBY);
