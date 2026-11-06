@@ -646,7 +646,7 @@
 	ethphy1: ethernet-phy@7 {
 		compatible = "ethernet-phy-id001c.c916";
 		reg = <7>;
-		reset-gpios = <&gpio2 30 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpio2 30 GPIO_ACTIVE_HIGH>;
 		reset-assert-us = <10000>;
 		reset-deassert-us = <80000>;
 		realtek,clkout-disable;
