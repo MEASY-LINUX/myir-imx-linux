@@ -766,18 +766,26 @@ static int lt9611_power_off(struct lt9611 *lt9611)
 	return ret;
 }
 
+static int lt9611_gpio_init(struct lt9611 *lt9611)
+{
+	struct device *dev = lt9611->dev;
+
+	lt9611->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+	if (IS_ERR(lt9611->reset_gpio))
+		return dev_err_probe(dev, PTR_ERR(lt9611->reset_gpio),
+				     "failed to acquire reset gpio\n");
+
+	return 0;
+}
+
 static void lt9611_reset(struct lt9611 *lt9611)
 {
-	/*
+	/* reset-gpios is active low, so logical 1 asserts reset. */
 	gpiod_set_value_cansleep(lt9611->reset_gpio, 1);
 	msleep(20);
 
 	gpiod_set_value_cansleep(lt9611->reset_gpio, 0);
-	msleep(20);
-
-	gpiod_set_value_cansleep(lt9611->reset_gpio, 1);
 	msleep(100);
-	*/
 }
 
 static struct lt9611_mode *lt9611_find_mode(const struct drm_display_mode *mode)
@@ -1412,6 +1420,11 @@ static int lt9611_probe(struct i2c_client *client)
 		dev_err(dev, "failed to parse device tree\n");
 		return ret;
 	}
+
+	ret = lt9611_gpio_init(lt9611);
+	if (ret)
+		goto err_of_put;
+
 	lt9611_reset(lt9611);
 
 	ret = lt9611_read_device_rev(lt9611);
