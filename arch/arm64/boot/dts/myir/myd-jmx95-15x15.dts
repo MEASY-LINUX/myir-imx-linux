@@ -10,7 +10,7 @@
 #include <dt-bindings/phy/phy-imx8-pcie.h>
 #include <dt-bindings/pwm/pwm.h>
 #include <dt-bindings/usb/pd.h>
-#include "../freescale/imx95.dtsi"
+#include "imx95.dtsi"
 
 #define FALLING_EDGE		BIT(0)
 #define RISING_EDGE		BIT(1)
