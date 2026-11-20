@@ -38,9 +38,6 @@
 		pinctrl-0 = <&pinctrl_csi_gpio>;
 		clocks = <&clk_camera_fixed>;
 		clock-names = "xclk";
-		assigned-clocks = <&clk_camera_fixed>;
-		assigned-clock-parents = <&osc_24m>;
-		assigned-clock-rates = <24000000>;
 		powerdown-gpios = <&gpio5 13 GPIO_ACTIVE_HIGH>;
 		reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
 		status = "okay";
