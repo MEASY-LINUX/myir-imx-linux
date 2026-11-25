@@ -435,6 +435,12 @@ config VIDEO_OV08X40
 	  To compile this driver as a module, choose M here: the
 	  module will be called ov08x40.
 
+config VIDEO_OV13855
+	tristate "OmniVision OV13855 sensor support"
+	select V4L2_CCI_I2C
+	help
+	  Support the OmniVision OV13855 RAW Bayer sensor over MIPI CSI-2.
+
 config VIDEO_OV13858
 	tristate "OmniVision OV13858 sensor support"
 	help
